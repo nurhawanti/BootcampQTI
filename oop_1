@@ -1,0 +1,73 @@
+#Game Among Us Hepi Hepi
+class Among_Us:
+    #inisialisasi properti
+    def __init__(self, name):
+        self.name = name
+        self.peran = ""
+        self.score = 0
+        self.status = ""
+
+    #method untuk menset peran pemain
+    def set_peran(self):
+        self.peran = (self.name + ". Anda belum mendapat peran")
+
+#inheritance terhadap class Among us
+#class yang berisikan method untuk memberikan tugas dalam bentuk pertanyaan yang harus dikerjakan pemain
+class Task(Among_Us):
+    #method untuk menampilkan pertanyaan
+    def question(self):
+        self.task = "10 X 10 + 10 - 10?"
+        return(self.task)
+
+    #method untuk memeriksa jawaban
+    def result(self, answer):
+        if answer == "100":
+            self.score = self.score + 100
+
+        #mengubah status pemain sesuai score yang diperoleh
+        if self.score == 100:
+            self.status = "SELAMAT ANDA MENANG!"
+            return self.status
+        else:
+            self.status = "MAAF ANDA BELUM BERUNTUNG. SILAHKAN COBA LAGI!"
+            return self.status
+
+#membuat polymorphism dengan mengubah peran pemain
+class Crewmate(Among_Us):
+    def set_peran(self):
+        return(self.name + ". Anda seorang CREWMATE")
+    
+#membuat polymorphism dengan mengubah peran pemain   
+class Impostor(Among_Us):
+    def set_peran(self):
+        return(self.name + ". Anda seorang IMPOSTOR")
+
+#method untuk memulai permainan
+def main():
+    name = input("MASUKKAN NAMA ANDA ")
+    angka_keberuntungan = input("BERAPA ANGKA KEBERUNTUNGAN ANDA? ")
+
+    #menentukan peran sesuai angka keberuntungan yang dipilih
+    if(int(angka_keberuntungan) % 2 == 0):
+        player = Crewmate(name)
+        print(player.set_peran())
+    else:
+        player = Impostor(name)
+        print(player.set_peran())
+
+    #memberikan pilihan kepada pemain untuk memulai permainan
+    play = input("APAKAH ANDA INGIN MEMULAI PERMAINAN?(YA/TIDAK)")
+
+    if(play == "YA"):
+        #menampilkan pertanyaan
+        question = Task(name)
+        answer = input(question.question())
+        #menampilkan nama, score yang diperoleh serta status pemain
+        print(question.name)
+        print("SCORE ANDA : ", question.score)
+        print(question.result(answer))
+    else:
+        print("TERIMA KASIH TELAH MENCOBA PERMAINAN INI")
+
+#memanggil method untuk memulai permainan
+main()
