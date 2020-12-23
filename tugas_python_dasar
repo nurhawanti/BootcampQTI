@@ -1,0 +1,138 @@
+"""
+APLIKASI PARKIR SEDERHANA
+
+input = JAM BERAPA MASUK PARKIRAN (1-12)
+        PAGI ATAU MALAM?
+        JAM BERAPA KELUAR PARKIRAN (1-12)
+        PAGI ATAU MALAM?
+output = ANDA PARKIR SELAMA ... JAM, Anda harus bayar Rp ...
+HARGA = 3 jam pertama 3000/jam
+        setelah 3 jam pertama 1000/jam
+        biaya maksimal 25000
+"""
+
+"""
+APLIKASI CONVERTER HARI DAN DETIK
+
+input
+Mau Menghitung apa? Hari atau Detik?
+
+output:
+361 hari = 1 tahun 0 bulan 1 hari
+
+Ketentuan:
+1 tahun = 360 hari
+1 bulan = 30 hari
+1 jam = 3600 detik
+1 menit = 60 detik
+
+"""
+
+#APLIKASI PARKIR SEDERHANA
+
+def waktu_parkir(a1,b1,a2,b2):
+    waktu = 0
+ 
+    if b1 == b2:
+        waktu = a2 - a1
+    else:
+        a2 = a2 + 12
+        waktu = a2 - a1
+
+    return waktu
+        
+def harga_parkir(x):
+    harga = 0   
+
+    if x <= 3:
+        harga = harga + 3000
+    elif x > 3:
+        harga = harga + 3000 + ((x - 3)*1000)
+
+    if harga > 25000:
+        harga = 25000
+
+    return harga
+
+def main():
+    jam_masuk = input("JAM BERAPA MASUK PARKIRAN (1-12)?")
+    waktu_masuk = input("PAGI ATAU MALAM?")
+    jam_keluar = input("JAM BERAPA KELUAR PARKIRAN (1-12)?")
+    waktu_keluar = input("PAGI ATAU MALAM?")
+
+    waktu = waktu_parkir(int(jam_masuk),waktu_masuk,int(jam_keluar),waktu_keluar)
+    harga = harga_parkir(waktu)
+    
+    print("ANDA PARKIR SELAMA",waktu, "JAM, Anda harus bayar Rp", harga)
+
+main()
+
+#=================================================================
+#APLIKASI CONVERTER HARI DAN DETIK
+
+def conv_hari(a):
+    hari = [0,0,0]
+    result = ["","",""]
+    
+    if a >= 360:
+        hari[0] = int(a/360)
+        if hari[0] != 0:
+            result[0] = str(hari[0]) + " tahun "
+            hari[1] = int((a - (360*hari[0])) / 30)
+            if hari[1] != 0:
+                result[1] = str(hari[1]) + " bulan "
+                hari[2] = int((a - (360*hari[0])) - (30*hari[1]))
+                if hari[2] != 0:
+                    result[2] = str(hari[2]) + " hari"
+    elif a >= 30 and a < 360:
+        hari[0] = int(a/30)
+        if hari[0] != 0:
+            result[0] = str(hari[0]) + " bulan "
+            hari[1] = int(a - (30*hari[0]))
+            if hari[1] != 0:
+                result[1] = str(hari[1]) + " hari"
+    else:
+        result[0] = str(a) + " hari"
+            
+    return result
+    
+def conv_detik(a):
+    detik = [0,0,0]
+    result = ["","",""]
+    
+    if a >= 3600:
+        detik[0] = int(a/3600)
+        if detik[0] != 0:
+            result[0] = str(detik[0]) + " jam "
+            detik[1] = int((a - (3600*detik[0])) / 60)
+            if detik[1] != 0:
+                result[1] = str(detik[1]) + " menit "
+                detik[2] = int((a - (3600*detik[0])) - (60*detik[1]))
+                if detik[2] != 0:
+                    result[2] = str(detik[2]) + " detik"
+    elif a >= 60 and a < 3600:
+        detik[0] = int(a/60)
+        if detik[0] != 0:
+            result[0] = str(detik[0]) + " menit "
+            detik[1] = int(a - (60*detik[0]))
+            if detik[1] != 0:
+                result[1] = str(detik[1]) + " detik"
+    else:
+        result[0] = str(a) + " detik"
+
+    return result
+
+def main():
+    a = input("Mau Menghitung apa (hari atau detik)?")
+
+    if a == "hari":
+        b = input("Berapa hari?")
+        for i in conv_hari(int(b)):
+            print (i, end="")
+    else:
+        b = input("Berapa detik?")
+        for i in conv_detik(int(b)):
+            print (i, end="")        
+
+main()
+
